@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">PDF Reader</string>
+    <string name="text">text</string>
+    <string name="orientation">Orientation</string>
+    <string name="about">About</string>
+    <string name="pdf_orientation">PDF Orientation</string>
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
+    <string name="verify">Verify</string>
+    <string name="developed_by_kyaw_thu">Developed By Kyaw Thu</string>
+    <string name="close">Close</string>
+    <string name="phone_09750534996">Phone - 09750534996</string>
+    <string name="email_copypaste673_gmail_com">Email - copypaste673@gmail.com</string>
+    <string name="version_1">Version : 1.0.0</string>
+    <string name="build_app_21_9_2020">Build App : 21.9.2020</string>
+    <string name="sort">Sort By</string>
+    <string name="search">Search</string>
+    <string name="date">Date</string>
+    <string name="name">Name</string>
+</resources>

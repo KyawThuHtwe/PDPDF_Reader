@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+    <TextView
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/colorTextPrimary"
+        android:text="@string/sort"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"/>
+    <RadioGroup
+        android:paddingLeft="10dp"
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        tools:ignore="RtlSymmetry">
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/date"
+            android:text="@string/date"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"/>
+        <RadioButton
+            android:id="@+id/name"
+            android:text="@string/name"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+    <View
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"/>
+    <Button
+        android:id="@+id/ok"
+        android:layout_gravity="right"
+        android:textColor="@color/colorTextPrimary"
+        android:background="@color/colorBackground"
+        android:text="@string/verify"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlHardcoded" />
+</LinearLayout>
