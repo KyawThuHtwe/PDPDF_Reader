@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout"
+    android:background="@color/colorBackground"
+    android:layout_margin="10dp">
+    <TextView
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:textColor="@color/colorTextPrimary"
+        android:text="@string/rename"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <EditText
+        android:hint="@string/rename_file_end_with_pdf"
+        android:background="@color/colorWhite"
+        android:textSize="14sp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:id="@+id/edit"
+        android:padding="10dp"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="@string/rename_file_end_with_pdf" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/cancel"
+            android:padding="10dp"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <View
+            android:background="@color/colorTextPrimary"
+            android:layout_width="1dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/ok"
+            android:padding="10dp"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

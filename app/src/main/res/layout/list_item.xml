@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="5dp">
+    android:padding="10dp">
     <ImageView
         android:src="@drawable/pdf"
         android:layout_width="50dp"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textColor="@color/colorTextPrimary"
             android:id="@+id/title"
             android:text="@string/text"
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             tools:ignore="SmallSp" />
         <TextView
-            android:textSize="10sp"
-            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
             android:id="@+id/size"
             android:text="@string/text"
             android:layout_width="match_parent"

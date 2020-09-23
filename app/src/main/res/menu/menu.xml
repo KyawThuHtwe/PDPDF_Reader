@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        app:showAsAction="ifRoom|collapseActionView|never"
+        app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:id="@+id/search"
         android:title="@string/search"
         android:icon="@drawable/ic_search"/>
     <item
-        app:showAsAction="withText"
+        app:showAsAction="never"
         android:id="@+id/orientation"
         android:title="@string/orientation"
         android:icon="@drawable/ic_screen_rotation"/>
     <item
-        app:showAsAction="withText"
+        app:showAsAction="never"
         android:id="@+id/about"
         android:title="@string/about"
         android:icon="@drawable/ic_developer_mode"/>

@@ -1,24 +1,30 @@
 package com.cu.pdfreader;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -49,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         listView=findViewById(R.id.listView);
         dir=new File(Environment.getExternalStorageDirectory().toString());
         permission_fn();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                permission_fn();
+            }
+        },1000);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,8 +70,116 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                actionAlertDialog(position);
+                return true;
+            }
+        });
     }
+    public void actionAlertDialog(final int position){
+        try {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
+            View view = LayoutInflater.from(this).inflate(R.layout.action_layout, (LinearLayout)findViewById(R.id.layout));
+            builder.setView(view);
+            TextView name=view.findViewById(R.id.name);
+            name.setText(MainActivity.fileList.get(position).getName());
+            TextView rename=view.findViewById(R.id.rename);
+            TextView delete=view.findViewById(R.id.delete);
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+            rename.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    renameFileAlertDialog(MainActivity.fileList.get(position));
+                    dialog.dismiss();
+                }
+            });
 
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    confirmDelete(MainActivity.fileList.get(position));
+                    dialog.dismiss();
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public void confirmDelete(final File file){
+        try {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Delete");
+            builder.setMessage("Are you sure you want to Delete?");
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    file.delete();
+                    permission_fn();
+
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            builder.create().show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public void renameFileAlertDialog(final File file){
+        try {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
+            final View view = LayoutInflater.from(this).inflate(R.layout.rename_layout, (LinearLayout)findViewById(R.id.layout));
+            builder.setView(view);
+            final EditText editText=view.findViewById(R.id.edit);
+            editText.setText(file.getName());
+            final TextView ok=view.findViewById(R.id.ok);
+            TextView cancel=view.findViewById(R.id.cancel);
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        if(editText.getText().toString().endsWith(".pdf")) {
+                            //dir = new File(Environment.getExternalStorageDirectory().toString());
+                            File old = new File(file.getPath() + "");
+                            boolean res = old.renameTo(new File( file.getParent(), editText.getText() + ""));
+                            if (res) {
+                                dialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Rename : "+editText.getText() + "", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Not changed : " + file.getName(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            editText.setText(editText.getText()+".pdf");
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    permission_fn();
+
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
     String sorting="date";
     private void sortAlertDialog() {
         try {
@@ -190,10 +311,19 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_PERMISSION);
             }
-        }else {
+        }else if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+
+            }else {
+                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_PERMISSION);
+            }
+        } else {
             boolean_permission=true;
-            //getfile(dir);
-            List<File> files = getfile(dir);
+            if(fileList.size()>0){
+                fileList.clear();
+            }
+            getfile(dir);
+            /*List<File> files = getfile(dir);
             Collections.sort(files, new Comparator<File>() {
 
                 @Override
@@ -208,6 +338,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
+             */
 
             adapter=new PDFAdapter(getApplicationContext(),fileList);
             listView.setAdapter(adapter);
@@ -292,9 +424,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            //case R.id.sort:
-                //sortAlertDialog();
-               // break;
             case R.id.orientation:
                 orientationAlertDialog();
                 break;

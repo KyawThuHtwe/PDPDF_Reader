@@ -17,4 +17,10 @@
     <string name="search">Search</string>
     <string name="date">Date</string>
     <string name="name">Name</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="rename_pdf">rename.pdf</string>
+    <string name="rename_file_end_with_pdf">Rename File end with .pdf</string>
 </resources>

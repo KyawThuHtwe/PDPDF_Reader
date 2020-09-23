@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -146,8 +145,7 @@ public class ViewPDFiles extends AppCompatActivity implements OnPageChangeListen
         mCurrentPage = page;
         //setTitle(String.format("%s %s / %s", "Page Number", page + 1, pageCount));
         int count=page+1;
-        actionBar.setTitle(MainActivity.fileList.get(position).getName());
-        actionBar.setSubtitle("Page("+count+"/"+totalPage+")");
+        actionBar.setTitle(MainActivity.fileList.get(position).getName()+"("+count+"/"+totalPage+")");
         TextFile(MainActivity.fileList.get(position).getName(),MainActivity.fileList.get(position).getName(),mCurrentPage);
     }
     private void TextFile(String Name,String title,int page) {
